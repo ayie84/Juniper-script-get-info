@@ -3,7 +3,7 @@
 This script perfom multiple command into singgle command to get some information. I filter some information base on what i need. This script i already test on EX2300. Here is the example output from the script.
 
 Output example from get-info.slax
-
+```
 ----------------------------------------------------------------------------------------------------------------
                                               Welcome admin
 ----------------------------------------------------------------------------------------------------------------
@@ -36,5 +36,6 @@ LOAD AVG:  *  1 minute  * : 0.46
            *  5 minute  * : 0.43
            *  15 minute * : 0.36
 ----------------------------------------------------------------------------------------------------------------
+```
 
 
