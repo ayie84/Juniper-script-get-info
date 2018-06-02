@@ -1,14 +1,14 @@
 version 1.1;
 /*
 ************************************************
-Author 			    : Ahmad Fitri B. Hassan
-Date			      : 1 Jun 2018 9:00 AM
+Author 		: Ahmad Fitri B. Hassan
+Date		: 1 Jun 2018 9:00 AM
 Script Version 	: V1.0
-Email			      : ahmadfitri@ump.edu.my
-Tested on 		  : EX2300-48T/P(Junos: 15.1X53-D56)
-About script 	  : This script is to get some
-				          basic information from switch
-				          EX2300. 
+Email		: ahmadfitri@ump.edu.my
+Tested on 	: EX2300-48T/P(Junos: 15.1X53-D56)
+About script 	: This script is to get some
+		basic information from switch
+		EX2300. 
 				  
 ************************************************
 * To run this script it must be installed in   * 
