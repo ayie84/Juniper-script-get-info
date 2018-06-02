@@ -55,5 +55,10 @@ root@EX2300T4:RE:0%
 If you not sure or dont know your root password. You may reset by execute this command.<br/>
 ```
 admin@EX2300T4> configure
-admin@EX2300T4>
+admin@EX2300T4# set system root-authentication plain-text-password 
+New password:[ENTER YOUR ROOT PASSWORD]
+Retype new password:[ENTER YOUR ROOT PASSWORD]
+
+{master:0}[edit]
+admin@EX2300T4# 
 ```
