@@ -1,14 +1,14 @@
 version 1.1;
 /*
 ************************************************
-Author 		: Ahmad Fitri B. Hassan
-Date		: 1 Jun 2018 9:00 AM
+Author 			: Ahmad Fitri B. Hassan
+Date			: 1 Jun 2018 9:00 AM
 Script Version 	: V1.0
-Email		: ahmadfitri@ump.edu.my
-Tested on 	: EX2300-48T/P(Junos: 15.1X53-D56)
+Email			: ahmadfitri@ump.edu.my
+Tested on 		: EX2300-48T/P(Junos: 15.1X53-D56)
 About script 	: This script is to get some
-		basic information from switch
-		EX2300. 
+				  basic information from switch
+				  EX2300. 
 				  
 ************************************************
 * To run this script it must be installed in   * 
@@ -17,7 +17,7 @@ About script 	: This script is to get some
 * set system scripts op file get-info.slax     *                      
 * Type:                                        *
 * "op url /var/db/scripts/op/get-info"         *
-* to run it                					           * 
+* to run it                		       * 
 * OR                                           *
 * op get-info                                  *
 ************************************************
@@ -42,7 +42,8 @@ import "../import/junos.xsl";
 
 match / 
 {
-<op-script-results>  {
+<op-script-results>  
+	{
 
 
 <output> "----------------------------------------------------------------------------------------------------------------";
@@ -62,30 +63,28 @@ call temp-template();
 <output> "----------------------------------------------------------------------------------------------------------------";
 call process-template();
 <output> "----------------------------------------------------------------------------------------------------------------";
-
-
- }
+	}
 }
 
 
 
-template switch-template() {
+template switch-template() 
+{
 /* SWITCH INFO */
 
 	var $query1 = { <command> "show chassis hardware"; }
 	var $result1 = jcs:invoke($query1);
-	<chassis-inventory> {
-	 	/*<output> "SYSTEM:    *  INFO   * : " _ name _" / " _ status;*/
-	 	/*<output> "                       : " _$result1/chassis/serial-number;*/
-	 	<output> "SWITCH:    *  INFO    * : " _ $hostname;
+	<chassis-inventory> 
+	{
+		<output> "SWITCH:    *  INFO    * : " _ $hostname;
 	 	<output> "           *  SERIAL  * : " _$result1/chassis/serial-number;
 	 	<output> "           *  MODEL   * : " _$result1/chassis/description;
-	 }
+	}
 
 	var $query2 = { <command> "show version"; }
 	var $result2 = jcs:invoke($query2);
-	<multi-routing-engine-results> {
-	 	/*<output> "SYSTEM:    *  INFO   * : " _ name _" / " _ status;*/
+	<multi-routing-engine-results> 
+	{
 	 	<output> "           *  VERSION * : " _$result2/multi-routing-engine-item/software-information/junos-version;
 	 	<output> "           *  OS      * : " _$result2/multi-routing-engine-item/software-information/package-information/comment;
 	 }
@@ -93,92 +92,105 @@ template switch-template() {
 }
 
 
-template ntp-template() {
+template ntp-template() 
+{
 /* NTP INFO */
 
 	var $query3 = { <command> "show system uptime"; }
 	var $result3 = jcs:invoke($query3);
-	<multi-routing-engine-results> {
-	 	<output> "CLOCK :    *  SOURCE  * : " _$result3/multi-routing-engine-item/system-uptime-information/time-source;
-	 }
+	<multi-routing-engine-results> 
+	{
+		<output> "CLOCK :    *  SOURCE  * : " _$result3/multi-routing-engine-item/system-uptime-information/time-source;
+	}
 }
 
 
-template chassis-template() {
-
+template chassis-template() 
+{
 /* CHASSIS ALARMS */
 
-var $query4 = { <command> "show chassis alarms"; }
-var $result4 = jcs:invoke($query4);              
-<alarm-information> {
- for-each($result4) { 
-  if ($result4/alarm-detail/alarm-class != "") {
-   <output> "CHASSIS:   *** RED *** : " _$result4/alarm-detail/alarm-class _" ALARM - " _$result4/alarm-detail/alarm-description; 
-      }
-else {
-<output> "CHASSIS:   ** GREEN ** : There are no active chassis alarms";
-     }
-    } 
+	var $query4 = { <command> "show chassis alarms"; }
+	var $result4 = jcs:invoke($query4);              
+	<alarm-information> 
+	{
+ 		for-each($result4)
+ 		{ 
+  			if ($result4/alarm-detail/alarm-class != "") 
+  			{
+   				<output> "CHASSIS:   *** RED *** : " _$result4/alarm-detail/alarm-class _" ALARM - " _$result4/alarm-detail/alarm-description; 
+    		}
+			else 
+			{
+				<output> "CHASSIS:   ** GREEN ** : There are no active chassis alarms";
+    		}
+    	} 
    }
 }
 
-template system-template() {
-
+template system-template() 
+{
 /* SYSTEM ALARMS */
 
-var $query5 = { <command> "show system alarms"; }
-var $result5 = jcs:invoke($query5);
-<alarm-information> {
- for-each($result5) { 
-  if ($result5/alarm-detail/alarm-class != "") {
-   <output> "SYSTEM:    *** RED *** : " _$result5/alarm-detail/alarm-class _" ALARM - " _$result5/alarm-detail/alarm-description; 
-      }
-else {
-<output> "SYSTEM:    ** GREEN ** : There are no active system alarms";
-    } 
-   }
-  } 
+	var $query5 = { <command> "show system alarms"; }
+	var $result5 = jcs:invoke($query5);
+	<alarm-information> 
+	{
+ 		for-each($result5) 
+ 		{ 
+  			if ($result5/alarm-detail/alarm-class != "") 
+  			{
+   				<output> "SYSTEM:    *** RED *** : " _$result5/alarm-detail/alarm-class _" ALARM - " _$result5/alarm-detail/alarm-description; 
+    		}
+			else 
+			{
+				<output> "SYSTEM:    ** GREEN ** : There are no active system alarms";
+    		} 
+   		}
+  	} 
 
 /* SYSTEM UPTIME AND USERS */
 
-var $query6 = { <command> "show system users"; }
-var $result6 = jcs:invoke($query6);
-<multi-routing-engine-results> {
- <output> "           *  UPTIME * : System Uptime is " _$result6/multi-routing-engine-item/system-users-information/uptime-information/up-time;
- for-each($result6/multi-routing-engine-item/system-users-information/uptime-information/user-table/user-entry) { 
- <output> "           *  USER   * : " _ user _" is currently logged in from " _ from _" since " _ login-time;
-    }
- }
+	var $query6 = { <command> "show system users"; }
+	var $result6 = jcs:invoke($query6);
+	<multi-routing-engine-results> 
+	{
+ 		<output> "           *  UPTIME * : System Uptime is " _$result6/multi-routing-engine-item/system-users-information/uptime-information/up-time;
+ 		for-each($result6/multi-routing-engine-item/system-users-information/uptime-information/user-table/user-entry)
+ 		{ 
+ 			<output> "           *  USER   * : " _ user _" is currently logged in from " _ from _" since " _ login-time;
+    	}
+ 	}
 
 /* SYSTEM LAST COMMIT */
 
-var $query7 = { <command> "show system commit"; }
-var $result7 = jcs:invoke($query7);
-<commit-information> {
- <output> "           *  COMMIT * : Last commit was " _$result7/commit-history/date-time _" by: " _$result7/commit-history/user;
-   }
-
+	var $query7 = { <command> "show system commit"; }
+	var $result7 = jcs:invoke($query7);
+	<commit-information> 
+	{
+ 		<output> "           *  COMMIT * : Last commit was " _$result7/commit-history/date-time _" by: " _$result7/commit-history/user;
+   	}
 
 /* ROUTING-ENGINE-STATUS */
 
-var $query8 = { <command> "show chassis routing-engine"; } 
-var $result8 = jcs:invoke($query8);
-
-
-
-for-each ($result8/route-engine) {
-if ((mastership-state!="master") && (mastership-state!="backup")) {
-  <output> "RSVP:      *** RED *** : RE" _ slot _ " is not OK";
-}   
-if ((slot=="0") && (status=="OK")) {
- <output> "           *  DRIVE  * : RE0 is " _ status _ " and " _ mastership-state _ " and has been up for " _ up-time;
- <output> "           *  REBOOT * : Last Reboot Reason :: " _ last-reboot-reason;
-}
-if ((slot=="1") && (status=="OK")) {
- <output> "           *  DRIVE  * : RE1 is " _ status _ " and " _ mastership-state _ " and has been up for " _ up-time;
- <output> "           *  REBOOT * : Last Reboot Reason :: " _ last-reboot-reason;
-   }
- }
+	var $query8 = { <command> "show chassis routing-engine"; } 
+	var $result8 = jcs:invoke($query8);
+	for-each ($result8/route-engine)
+	{
+		if ((mastership-state!="master") && (mastership-state!="backup")) 
+		{
+  			<output> "RSVP:      *** RED *** : RE" _ slot _ " is not OK";
+		}   
+		if ((slot=="0") && (status=="OK")) 
+		{
+ 			<output> "           *  DRIVE  * : RE0 is " _ status _ " and " _ mastership-state _ " and has been up for " _ up-time;
+ 			<output> "           *  REBOOT * : Last Reboot Reason :: " _ last-reboot-reason;
+		}
+		if ((slot=="1") && (status=="OK"))
+		{
+ 			<output> "           *  DRIVE  * : RE1 is " _ status _ " and " _ mastership-state _ " and has been up for " _ up-time;
+ 			<output> "           *  REBOOT * : Last Reboot Reason :: " _ last-reboot-reason;
+   		}
+ 	}
 }
 
 
@@ -187,43 +199,55 @@ template temp-template() {
 
 	var $query9 = { <command> "show chassis environment"; }
 	var $result9 = jcs:invoke($query9);
-	<environment-information> {
-	 for-each($result9/environment-item) { 
-	 if ((name=="FPC 0 Power Supply 0")) {
-	 	<output> "POWER:     *  STATUS * : " _ name _" / " _ status;
-	 	}
+	<environment-information> 
+	{
+		for-each($result9/environment-item) 
+		{ 
+	 		if ((name=="FPC 0 Power Supply 0")) 
+	 		{
+	 			<output> "POWER:     *  STATUS * : " _ name _" / " _ status;
+	 		}
 	    }
-	 }
+	}
 
 	var $query10 = { <command> "show chassis environment"; }
 	var $result10 = jcs:invoke($query10);
-	<environment-information> {
-	 for-each($result10/environment-item) { 
-	 if ((name!="FPC 0 Power Supply 0") && (name!="FPC 0 Fan Tray 0") && (name!="FPC 0 Fan Tray 1")) {
-	 	<output> "SENSOR:    *  INFO   * : " _ name _" / " _ temperature _" / " _ status;
-	 	}
+	<environment-information> 
+	{
+		for-each($result10/environment-item) 
+		{ 
+	 		if ((name!="FPC 0 Power Supply 0") && (name!="FPC 0 Fan Tray 0") && (name!="FPC 0 Fan Tray 1")) 
+	 		{
+	 			<output> "SENSOR:    *  INFO   * : " _ name _" / " _ temperature _" / " _ status;
+	 		}
 	    }
-	 }
+	}
 
 	var $query11 = { <command> "show chassis environment"; }
 	var $result11 = jcs:invoke($query11);
-	<environment-information> {
-	 for-each($result11/environment-item) { 
-	 if ((name=="FPC 0 Fan Tray 0")) {
-	 	<output> "FAN:       *  INFO   * : " _ name _" / " _ comment _" / " _ status;
-	 	}
+	<environment-information> 
+	{
+		for-each($result11/environment-item) 
+		{ 
+	 		if ((name=="FPC 0 Fan Tray 0")) 
+	 		{
+	 			<output> "FAN:       *  INFO   * : " _ name _" / " _ comment _" / " _ status;
+	 		}
 	    }
-	 }
+	}
 
 	var $query12 = { <command> "show chassis environment"; }
 	var $result12 = jcs:invoke($query12);
-	<environment-information> {
-	 for-each($result12/environment-item) { 
-	 if ((name=="FPC 0 Fan Tray 1")) {
-	 	<output> "FAN:       *  INFO   * : " _ name _" / " _ comment _" / " _ status;
-	 	}
+	<environment-information> 
+	{
+		for-each($result12/environment-item) 
+		{ 
+	 		if ((name=="FPC 0 Fan Tray 1")) 
+	 		{
+	 			<output> "FAN:       *  INFO   * : " _ name _" / " _ comment _" / " _ status;
+	 		}
 	    }
-	 }
+	}
 }
 
 template process-template() {
@@ -231,16 +255,22 @@ template process-template() {
 
 	var $query13 = { <command> "show chassis routing-engine"; }
 	var $result13 = jcs:invoke($query13);
-	<route-engine-information> {
-	 	<output> "PROCESS:   *  CPU       * : Process " _$result13/route-engine/cpu-system _" % / IDLE : " _$result13/route-engine/cpu-idle _" %";
-	 }
+	<route-engine-information> 
+	{
+		<output> "PROCESS:   *  CPU       * : Process " _$result13/route-engine/cpu-system _" % / IDLE : " _$result13/route-engine/cpu-idle _" %";
+	}
 
 	var $query14 = { <command> "show chassis routing-engine"; }
 	var $result14 = jcs:invoke($query14);
-	<route-engine-information> {
-	 	<output> "LOAD AVG:  *  1 minute  * : " _$result14/route-engine/load-average-one;
+	<route-engine-information> 
+	{
+		<output> "LOAD AVG:  *  1 minute  * : " _$result14/route-engine/load-average-one;
 	 	<output> "           *  5 minute  * : " _$result14/route-engine/load-average-five;
 	 	<output> "           *  15 minute * : " _$result14/route-engine/load-average-fifteen;
-	 }
+	}
 }
 /******************** END OF TEMPLATE *********************/
+
+
+
+
