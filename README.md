@@ -62,3 +62,16 @@ Retype new password:[ENTER YOUR ROOT PASSWORD]
 {master:0}[edit]
 admin@EX2300T4# 
 ```
+
+<b>Step 3</b></br>
+* Go to folder /var/db/scripts/op
+```
+root@EX2300T4:RE:0% cd /var/db/scripts/op/
+root@EX2300T4:RE:0% ls
+myscript.slax
+root@EX2300T4:RE:0% vi get-info.slax
+```
+-Select all & copy the script
+-Press 'i' & paste.
+-Press 'esc', ':' then type 'wq!' to save the script into file
+
