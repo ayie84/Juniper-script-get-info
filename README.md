@@ -40,8 +40,9 @@ LOAD AVG:  *  1 minute  * : 0.46
 
 # How to load into EX2300
 
-<b>Step 1</b>
-</br>Please make sure you know the root password
+<b>Step 1</b></br>
+* Please make sure you know the root password<br/>
+
 
 -Step 2
 
