@@ -75,3 +75,55 @@ root@EX2300T4:RE:0% vi get-info.slax
 * <i>Press 'i' & paste.</i><br/>
 * <i>Press 'esc', ':' then type 'wq!' to save the script into file.</i><br/>
 
+<b>Step 4</b></br>
+* Confirm file on folder /var/db/scripts/op
+* Exit from root
+```
+root@EX2300T4:RE:0% cd /var/db/scripts/op/
+root@EX2300T4:RE:0% ls
+get-info.slax
+root@EX2300T4:RE:0% exit
+%exit
+admin@EX2300T4>
+```
+
+<b>Step 5</b></br>
+* At this stage you can execute the script.<br/>
+```
+admin@EX2300T4> op url /var/sb/scripts/op/get-info.slax
+```
+but, it still long text to type right?<br/>
+You can make it more shorter by execute this command.<br/>
+```
+admin@EX2300T4> op ?
+Possible completions:
+  <script>             Name of script to run
+  invoke-debugger      Invoke script in debugger mode
+  url                  Execution of remote op script
+{master:0}
+admin@EX2300T4> configure
+admin@EX2300T4# set system scripts op file get-info.slax
+admin@EX2300T4# set system scripts op file get-info.slax description "Get basic system information for EX2300"
+admin@EX2300T4# commit
+admin@EX2300T4# exit
+admin@EX2300T4> show configuration system scripts 
+op {
+    file get-info.slax {
+        description "Get basic system information for EX2300";
+    }
+}
+
+{master:0}
+admin@EX2300T4> op ?
+Possible completions:
+  <script>             Name of script to run
+  get-info             Get basic system information for EX2300
+  invoke-debugger      Invoke script in debugger mode
+  url                  Execution of remote op script
+{master:0}
+admin@EX2300T4> op get-info
+
+```
+You will get output like the example file.<br/><br/>
+[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NEL2PLBDG8LDA)
+
