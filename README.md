@@ -44,5 +44,16 @@ LOAD AVG:  *  1 minute  * : 0.46
 * Please make sure you know the root password<br/>
 
 
--Step 2
-
+<b>Step 2</b></br>
+* Start Shell<br/>
+```
+admin@EX2300T4> start shell
+% su
+Password:[ENTER YOUR ROOT PASSWORD]
+root@EX2300T4:RE:0%
+```
+If you not sure or dont know your root password. You may reset by execute this command.<br/>
+```
+admin@EX2300T4> configure
+admin@EX2300T4>
+```
