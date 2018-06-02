@@ -71,7 +71,7 @@ root@EX2300T4:RE:0% ls
 myscript.slax
 root@EX2300T4:RE:0% vi get-info.slax
 ```
--Select all & copy the script. <br/>
--Press 'i' & paste.<br/>
--Press 'esc', ':' then type 'wq!' to save the script into file.<br/>
+* *Select all & copy the script. <br/>
+* *Press 'i' & paste.<br/>
+* *Press 'esc', ':' then type 'wq!' to save the script into file.<br/>
 
