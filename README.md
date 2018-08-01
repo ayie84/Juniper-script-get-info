@@ -90,7 +90,7 @@ admin@EX2300T4>
 <b>Step 5</b></br>
 * At this stage you can execute the script.<br/>
 ```
-admin@EX2300T4> op url /var/sb/scripts/op/get-info.slax
+admin@EX2300T4> op url /var/db/scripts/op/get-info.slax
 ```
 but, it still long text to type right?<br/>
 You can make it more shorter by execute this command.<br/>
